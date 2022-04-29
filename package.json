@@ -5,29 +5,28 @@
   "version": "0.0.1",
   "publisher": "NicolasRoehm",
   "license": "MIT",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "git://https://github.com/NicolasRoehm/angular-vscode-cleaner.git"
   },
   "engines": {
-    "vscode": "^1.55.0"
+    "vscode": "^1.66.0"
   },
   "categories": [
     "Other"
   ],
   "activationEvents": [
-    "onCommand:angularVSCCleaner.importCleaner",
-    "onCommand:angularVSCCleaner.constructorCleaner",
-    "onCommand:angularVSCCleaner.componentCleaner"
+    "onCommand:extension.importCleaner",
+    "onCommand:extension.constructorCleaner",
+    "onCommand:extension.componentCleaner"
   ],
-  "main": "./out/extension.js",
+  "main": "./out/extension",
   "contributes": {
     "configuration": {
       "type": "object",
       "title": "angular-vscode-cleaner",
       "properties": {
-        "angularVSCCleaner.import.config": {
+        "extension.import.config": {
           "description": "Clean import configuration",
           "scope": "window",
           "type": "array",
@@ -104,15 +103,15 @@
     },
     "commands": [
       {
-        "command": "angularVSCCleaner.importCleaner",
+        "command": "extension.importCleaner",
         "title": "Clean imports"
       },
       {
-        "command": "angularVSCCleaner.constructorCleaner",
+        "command": "extension.constructorCleaner",
         "title": "Clean constructor"
       },
       {
-        "command": "angularVSCCleaner.componentCleaner",
+        "command": "extension.componentCleaner",
         "title": "Clean component"
       }
     ]
@@ -120,15 +119,22 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
-    "lint": "eslint . --ext .ts,.tsx",
-    "watch": "tsc -watch -p ./"
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/node": "^12.12.0",
     "@types/vscode": "^1.66.0",
-    "@typescript-eslint/eslint-plugin": "^5.19.0",
-    "@typescript-eslint/parser": "^5.19.0",
-    "eslint": "^8.13.0",
-    "typescript": "^4.6.3"
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "14.x",
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
+    "eslint": "^8.11.0",
+    "glob": "^7.2.0",
+    "mocha": "^9.2.2",
+    "typescript": "^4.5.5",
+    "@vscode/test-electron": "^2.1.3"
   }
 }
