@@ -1,14 +1,17 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+// External modules
+import { window }           from 'vscode';
+import { commands }         from 'vscode';
+import { ExtensionContext } from 'vscode';
+import { Position }         from 'vscode';
+import { Range }            from 'vscode';
 
 // Helpers
 import { ImportHelper }      from './helpers/import.helper';
 import { ConstructorHelper } from './helpers/constructor.helper';
 
-// NOTE This method is called when your extension is activated
+// This method is called when your extension is activated
 // your extension is activated the very first time the command is executed
-export function activate(context : vscode.ExtensionContext)
+export function activate(context : ExtensionContext) : void
 {
 
   console.log('The extension "angular-vscode-cleaner" is now active!');
@@ -16,15 +19,15 @@ export function activate(context : vscode.ExtensionContext)
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
-  const disposableImportCleaner = vscode.commands.registerCommand('extension.importCleaner', () =>
+  const disposableImportCleaner = commands.registerCommand('angularVSCCleaner.importCleaner', () =>
   {
     // The code you place here will be executed every time your command is executed
 
-    const editor = vscode.window.activeTextEditor;
+    const editor = window.activeTextEditor;
 
     if (!editor)
     {
-      vscode.window.showErrorMessage("No file is open, can't reorder imports");
+      window.showErrorMessage("No file is open, can't reorder imports");
       return;
     }
 
@@ -57,7 +60,7 @@ export function activate(context : vscode.ExtensionContext)
 
     if (!importFound)
     {
-      vscode.window.showErrorMessage("No import found, can't reorder");
+      window.showErrorMessage("No import found, can't reorder");
       return;
     }
 
@@ -90,9 +93,9 @@ export function activate(context : vscode.ExtensionContext)
     // NOTE Remove lines found from activeDocument
     editor.edit(editBuilder =>
     {
-      const start = new vscode.Position(0, 0); // NOTE Can change the first 0 to firstIndex
-      const end   = new vscode.Position(lastIndex, allLines[lastIndex].length);
-      const rangeToDelete = new vscode.Range(start, end);
+      const start = new Position(0, 0); // NOTE Can change the first 0 to firstIndex
+      const end   = new Position(lastIndex, allLines[lastIndex].length);
+      const rangeToDelete = new Range(start, end);
       editBuilder.delete(rangeToDelete);
 
       // NOTE Add new lines to activeDocument
@@ -101,13 +104,13 @@ export function activate(context : vscode.ExtensionContext)
 
   });
 
-  const disposableConstructorCleaner = vscode.commands.registerCommand('extension.constructorCleaner', () =>
+  const disposableConstructorCleaner = commands.registerCommand('angularVSCCleaner.constructorCleaner', () =>
   {
-    const editor = vscode.window.activeTextEditor;
+    const editor = window.activeTextEditor;
 
     if (!editor)
     {
-      vscode.window.showErrorMessage("No file is open, can't clean constructor");
+      window.showErrorMessage("No file is open, can't clean constructor");
       return;
     }
 
@@ -144,7 +147,7 @@ export function activate(context : vscode.ExtensionContext)
 
     if (!constructorFound)
     {
-      vscode.window.showErrorMessage("No constructor found, can't clean");
+      window.showErrorMessage("No constructor found, can't clean");
       return;
     }
 
@@ -162,9 +165,9 @@ export function activate(context : vscode.ExtensionContext)
     // NOTE Remove lines found from activeDocument
     editor.edit(editBuilder =>
     {
-      const start = new vscode.Position(firstIndex, 0);
-      const end   = new vscode.Position(lastIndex, allLines[lastIndex].length);
-      const rangeToDelete = new vscode.Range(start, end);
+      const start = new Position(firstIndex, 0);
+      const end   = new Position(lastIndex, allLines[lastIndex].length);
+      const rangeToDelete = new Range(start, end);
       editBuilder.delete(rangeToDelete);
 
       // NOTE Add new lines to activeDocument
@@ -173,7 +176,7 @@ export function activate(context : vscode.ExtensionContext)
 
   });
 
-  let disposableComponentCleaner = vscode.commands.registerCommand('extension.componentCleaner', () =>
+  let disposableComponentCleaner = commands.registerCommand('angularVSCCleaner.componentCleaner', () =>
   {
     // TODO
   });

@@ -11,7 +11,7 @@
     "url": "git://https://github.com/NicolasRoehm/angular-vscode-cleaner.git"
   },
   "engines": {
-    "vscode": "^1.34.0"
+    "vscode": "^1.55.0"
   },
   "categories": [
     "Other"
@@ -47,56 +47,56 @@
           },
           "default": [
             {
-              "category"    : "Angular modules",
-              "fromContent" : "@angular"
+              "category": "Angular modules",
+              "fromContent": "@angular"
             },
             {
-              "category"    : "Ionic modules",
-              "fromContent" : "ionic"
+              "category": "Ionic modules",
+              "fromContent": "ionic"
             },
             {
-              "category"    : "Internal modules",
-              "fromContent" : ".module, .manager, environment"
+              "category": "Internal modules",
+              "fromContent": ".module, .manager, environment"
             },
             {
-              "category"    : "Interfaces",
-              "fromContent" : ".interface"
+              "category": "Interfaces",
+              "fromContent": ".interface"
             },
             {
-              "category"    : "Directives",
-              "fromContent" : ".directive"
+              "category": "Directives",
+              "fromContent": ".directive"
             },
             {
-              "category"    : "Factories",
-              "fromContent" : ".factory"
+              "category": "Factories",
+              "fromContent": ".factory"
             },
             {
-              "category"    : "Validators",
-              "fromContent" : ".validator"
+              "category": "Validators",
+              "fromContent": ".validator"
             },
             {
-              "category"    : "Guards",
-              "fromContent" : ".guard"
+              "category": "Guards",
+              "fromContent": ".guard"
             },
             {
-              "category"    : "Helpers",
-              "fromContent" : ".helper"
+              "category": "Helpers",
+              "fromContent": ".helper"
             },
             {
-              "category"    : "Enums",
-              "fromContent" : ".enum"
+              "category": "Enums",
+              "fromContent": ".enum"
             },
             {
-              "category"    : "Models",
-              "fromContent" : ".model"
+              "category": "Models",
+              "fromContent": ".model"
             },
             {
-              "category"    : "Services",
-              "fromContent" : ".service"
+              "category": "Services",
+              "fromContent": ".service"
             },
             {
-              "category"    : "Components",
-              "fromContent" : ".component"
+              "category": "Components",
+              "fromContent": ".component"
             }
           ]
         }
