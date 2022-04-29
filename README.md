@@ -1,6 +1,6 @@
 # Angular VSCode Cleaner
 
-## How to use
+## Usage
 
 [Installing Extensions](https://vscode-docs.readthedocs.io/en/stable/extensions/install-extension/)
 
@@ -25,6 +25,11 @@ Move the extension to the following folder
 - Mac `$HOME/.vscode/extensions`
 - Linux `$HOME/.vscode/extensions`
 
+## Development
+
+Start tsc watch `npm run watch` then press `F5`.
+
+### Unclassified import example
 
 ```ts
 import {Inject, Injectable} from '@angular/core';
@@ -42,8 +47,8 @@ import {TokenService} from "@core/services/token.service";
 import {IStore, RC_STORE} from "@core/services/store/interface";
 import {defaultRouting} from "../../routes/default-routing";
 import {RoleType} from "../models/role-type";
-import {sourcerRouting} from "../../routes/sourcer-routing";
-import {dispatcherRouting} from "../../routes/dispatcher-routing";
+import {sourceRouting} from "../../routes/sourcer-routing";
+import {dispatchRouting} from "../../routes/dispatcher-routing";
 import {pilotRouting} from "../../routes/pilot-routing";
 import {Router} from "@angular/router";
 ```

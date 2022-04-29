@@ -1,12 +1,14 @@
 export class ImportCategory
 {
+  public id            : number;
   public category      : string;
   public fromContent   : string;
 
   public fromSelectors : string[];
 
-  constructor(json : any)
+  constructor(index : number, json : any)
   {
+    this.id            = index;
     this.category      = json?.category    || '';
     this.fromContent   = json?.fromContent || '';
 

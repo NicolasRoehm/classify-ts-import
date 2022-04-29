@@ -1,5 +1,3 @@
-'use strict';
-
 // External modules
 import { window }           from 'vscode';
 import { commands }         from 'vscode';

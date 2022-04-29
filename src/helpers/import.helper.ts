@@ -11,8 +11,8 @@ export class ImportHelper
     const extConfig  = workspace.getConfiguration('angular-vscode-extension')
     const parameters : any[]          = extConfig.import.categories;
     const categories : ImportCategory[] = [];
-    for (let parameter of parameters)
-      categories.push(new ImportCategory(parameter));
+    for (let i = 0; i < parameters.length; i++)
+      categories.push(new ImportCategory(i, parameters[i]));
     return categories;
   }
 
