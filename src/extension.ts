@@ -1,3 +1,5 @@
+'use strict';
+
 // External modules
 import { window }           from 'vscode';
 import { commands }         from 'vscode';
@@ -89,7 +91,7 @@ export function activate(context : ExtensionContext) : void
     });
 
     let classifiedLines : string[] = [];
-    classifiedLines = ImportHelper.classifyLines(lines);
+    classifiedLines = ImportHelper.classifyLines(lines, categories);
     const linesAsText = classifiedLines.join('\n');
 
     // NOTE Remove lines found from activeDocument

@@ -6,8 +6,11 @@ export class ImportCategory
 
   public fromSelectors : string[];
 
+  public lines         : string[];
+
   constructor(index : number, json : any)
   {
+    this.lines         = [];
     this.id            = index;
     this.category      = json?.category    || '';
     this.fromContent   = json?.fromContent || '';

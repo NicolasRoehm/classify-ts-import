@@ -8,7 +8,7 @@ export class ImportHelper
 {
   public static getCategories() : ImportCategory[]
   {
-    const extConfig  = workspace.getConfiguration('angular-vscode-extension')
+    const extConfig  = workspace.getConfiguration('angular-vscode-extension');
     const parameters : any[]          = extConfig.import.categories;
     const categories : ImportCategory[] = [];
     for (let i = 0; i < parameters.length; i++)
@@ -16,113 +16,23 @@ export class ImportHelper
     return categories;
   }
 
-  public static classifyLines(lines : string[]) : string[]
+  public static classifyLines(lines : string[], categories : ImportCategory[]) : string[]
   {
     let classified : string[] = [];
 
     // TODO Add pages
     // TODO Add AWS modules
-
-    const angularLines   : string[] = ['// Angular modules'];
-    const ionicLines     : string[] = ['// Ionic modules'];
-    const externalLines  : string[] = ['// External modules'];
-    const moduleLines    : string[] = ['// Internal modules'];
-    const serviceLines   : string[] = ['// Services'];
-    const helperLines    : string[] = ['// Helpers'];
-    const modelLines     : string[] = ['// Models'];
-    const enumLines      : string[] = ['// Enums'];
-    const componentLines : string[] = ['// Components'];
-
     for (const line of lines)
+      for (const category of categories)
+        for (const selector of category.fromSelectors)
+          if (line.includes(selector))
+            category.lines.push(line);
+
+    for (const category of categories)
     {
-      const hasAngular   = line.includes('@angular');
-      const hasIonic     = line.includes('ionic');
-      const hasModule    = line.includes('.module');
-      const hasService   = line.includes('.service');
-      const hasHelper    = line.includes('.helper');
-      const hasModel     = line.includes('.model');
-      const hasEnum      = line.includes('.enum');
-      const hasComponent = line.includes('.component');
-
-      if (hasAngular)
-      {
-        angularLines.push(line);
-        continue;
-      }
-
-      if (hasIonic)
-      {
-        ionicLines.push(line);
-        continue;
-      }
-
-      if (hasModule)
-      {
-        moduleLines.push(line);
-        continue;
-      }
-
-      if (hasService)
-      {
-        serviceLines.push(line);
-        continue;
-      }
-
-      if (hasHelper)
-      {
-        helperLines.push(line);
-        continue;
-      }
-
-      if (hasModel)
-      {
-        modelLines.push(line);
-        continue;
-      }
-
-      if (hasEnum)
-      {
-        enumLines.push(line);
-        continue;
-      }
-
-      if (hasComponent)
-      {
-        componentLines.push(line);
-        continue;
-      }
-
-      externalLines.push(line);
+      category.lines.push('');
+      classified = [...classified, ...category.lines];
     }
-
-    angularLines.push(  '');
-    ionicLines.push(    '');
-    externalLines.push( '');
-    moduleLines.push(   '');
-    serviceLines.push(  '');
-    helperLines.push(   '');
-    modelLines.push(    '');
-    enumLines.push(     '');
-    // componentLines.push('');
-
-    if (angularLines.length > 2)
-      classified = [...classified, ...angularLines];
-    if (ionicLines.length > 2)
-      classified = [...classified, ...ionicLines];
-    if (externalLines.length > 2)
-      classified = [...classified, ...externalLines];
-    if (moduleLines.length > 2)
-      classified = [...classified, ...moduleLines];
-    if (serviceLines.length > 2)
-      classified = [...classified, ...serviceLines];
-    if (helperLines.length > 2)
-      classified = [...classified, ...helperLines];
-    if (modelLines.length > 2)
-      classified = [...classified, ...modelLines];
-    if (enumLines.length > 2)
-      classified = [...classified, ...enumLines];
-    if (componentLines.length > 1) //
-      classified = [...classified, ...componentLines];
 
     return classified;
   }

@@ -32,23 +32,13 @@ Start tsc watch `npm run watch` then press `F5`.
 ### Unclassified import example
 
 ```ts
-import {Inject, Injectable} from '@angular/core';
-import {Observable, tap} from 'rxjs';
-import {AuthUserDto} from '@repository/auth-user.type';
-import {ExpiredSession} from '@core/store/actions/auth.actions';
-import {Store} from '@ngrx/store';
-import {IAppState} from '@core/store/state/app.state';
-import {HttpClient} from "@angular/common/http";
-import {Actions} from "@ngrx/effects";
-import {User} from "@models/user";
-import {userKey} from "@core/models/store-key";
-import {SetUser} from "@core/store/actions/user.actions";
-import {TokenService} from "@core/services/token.service";
-import {IStore, RC_STORE} from "@core/services/store/interface";
-import {defaultRouting} from "../../routes/default-routing";
-import {RoleType} from "../models/role-type";
-import {sourceRouting} from "../../routes/sourcer-routing";
-import {dispatchRouting} from "../../routes/dispatcher-routing";
-import {pilotRouting} from "../../routes/pilot-routing";
-import {Router} from "@angular/router";
+import { Component, EventEmitter, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
+import * as _ from "lodash";
+import { AuthService } from '../../shared/services/auth.service';
+import { ProfileService } from '../../shared/services/profile.service';
+import { Profile } from '../../shared/models/profile.model';
+import { AddProfileComponent }    from '../add-profile/add-profile.component';
+import { RemoveProfileComponent } from '../remove-profile/remove-profile.component';
+import { User } from '../../shared/models/user.model';
 ```
