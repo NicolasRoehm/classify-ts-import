@@ -20,7 +20,7 @@ export class ConstructorHelper
       const privates : string[] = [];
       const others   : string[] = [];
 
-      for (let part of parts)
+      for (const part of parts)
       {
         const hasPublic  = part.includes('public');
         const hasPrivate = part.includes('private');
@@ -54,7 +54,8 @@ export class ConstructorHelper
       ConstructorHelper.rewriteConstructorVar(publics,  '    public  ', maxNameLength);
       ConstructorHelper.rewriteConstructorVar(privates, '    private ', maxNameLength);
 
-      const arrays = [].concat.apply([], [others, publics, privates]);
+      const emptyArr : string[] = [];
+      const arrays = emptyArr.concat(others, publics, privates);
       const lines  = arrays.join(',\n');
 
       text += lines;

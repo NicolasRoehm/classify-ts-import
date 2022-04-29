@@ -1,6 +1,6 @@
 {
   "name": "angular-vscode-cleaner",
-  "displayName": "Angular VSCode cleaner",
+  "displayName": "Angular VSCode Cleaner",
   "description": "Extension that reorder and classify Angular imports",
   "version": "0.0.1",
   "publisher": "NicolasRoehm",
@@ -17,23 +17,102 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.importCleaner",
-    "onCommand:extension.constructorCleaner",
-    "onCommand:extension.componentCleaner"
+    "onCommand:angularVSCCleaner.importCleaner",
+    "onCommand:angularVSCCleaner.constructorCleaner",
+    "onCommand:angularVSCCleaner.componentCleaner"
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "angular-vscode-cleaner",
+      "properties": {
+        "angularVSCCleaner.import.config": {
+          "description": "Clean import configuration",
+          "scope": "window",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "title": "Categories by 'from' content",
+            "properties": {
+              "category": {
+                "type": "string",
+                "description": "Category"
+              },
+              "fromContent": {
+                "type": "string",
+                "description": "'from' content separated by comma"
+              }
+            }
+          },
+          "default": [
+            {
+              "category"    : "Angular modules",
+              "fromContent" : "@angular"
+            },
+            {
+              "category"    : "Ionic modules",
+              "fromContent" : "ionic"
+            },
+            {
+              "category"    : "Internal modules",
+              "fromContent" : ".module, .manager, environment"
+            },
+            {
+              "category"    : "Interfaces",
+              "fromContent" : ".interface"
+            },
+            {
+              "category"    : "Directives",
+              "fromContent" : ".directive"
+            },
+            {
+              "category"    : "Factories",
+              "fromContent" : ".factory"
+            },
+            {
+              "category"    : "Validators",
+              "fromContent" : ".validator"
+            },
+            {
+              "category"    : "Guards",
+              "fromContent" : ".guard"
+            },
+            {
+              "category"    : "Helpers",
+              "fromContent" : ".helper"
+            },
+            {
+              "category"    : "Enums",
+              "fromContent" : ".enum"
+            },
+            {
+              "category"    : "Models",
+              "fromContent" : ".model"
+            },
+            {
+              "category"    : "Services",
+              "fromContent" : ".service"
+            },
+            {
+              "category"    : "Components",
+              "fromContent" : ".component"
+            }
+          ]
+        }
+      }
+    },
     "commands": [
       {
-        "command": "extension.importCleaner",
+        "command": "angularVSCCleaner.importCleaner",
         "title": "Clean imports"
       },
       {
-        "command": "extension.constructorCleaner",
+        "command": "angularVSCCleaner.constructorCleaner",
         "title": "Clean constructor"
       },
       {
-        "command": "extension.componentCleaner",
+        "command": "angularVSCCleaner.componentCleaner",
         "title": "Clean component"
       }
     ]

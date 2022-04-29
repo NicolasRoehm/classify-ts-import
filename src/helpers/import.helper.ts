@@ -7,17 +7,17 @@ export class ImportHelper
     // TODO Add pages
     // TODO Add AWS modules
 
-    let angularLines   : string[] = ['// Angular modules'];
-    let ionicLines     : string[] = ['// Ionic modules'];
-    let externalLines  : string[] = ['// External modules'];
-    let moduleLines    : string[] = ['// Internal modules'];
-    let serviceLines   : string[] = ['// Services'];
-    let helperLines    : string[] = ['// Helpers'];
-    let modelLines     : string[] = ['// Models'];
-    let enumLines      : string[] = ['// Enums'];
-    let componentLines : string[] = ['// Components'];
+    const angularLines   : string[] = ['// Angular modules'];
+    const ionicLines     : string[] = ['// Ionic modules'];
+    const externalLines  : string[] = ['// External modules'];
+    const moduleLines    : string[] = ['// Internal modules'];
+    const serviceLines   : string[] = ['// Services'];
+    const helperLines    : string[] = ['// Helpers'];
+    const modelLines     : string[] = ['// Models'];
+    const enumLines      : string[] = ['// Enums'];
+    const componentLines : string[] = ['// Components'];
 
-    for (let line of lines)
+    for (const line of lines)
     {
       const hasAngular   = line.includes('@angular');
       const hasIonic     = line.includes('ionic');
@@ -90,23 +90,23 @@ export class ImportHelper
     // componentLines.push('');
 
     if (angularLines.length > 2)
-      classified.push.apply(classified, angularLines);
+      classified = [...classified, ...angularLines];
     if (ionicLines.length > 2)
-      classified.push.apply(classified, ionicLines);
+      classified = [...classified, ...ionicLines];
     if (externalLines.length > 2)
-      classified.push.apply(classified, externalLines);
+      classified = [...classified, ...externalLines];
     if (moduleLines.length > 2)
-      classified.push.apply(classified, moduleLines);
+      classified = [...classified, ...moduleLines];
     if (serviceLines.length > 2)
-      classified.push.apply(classified, serviceLines);
+      classified = [...classified, ...serviceLines];
     if (helperLines.length > 2)
-      classified.push.apply(classified, helperLines);
+      classified = [...classified, ...helperLines];
     if (modelLines.length > 2)
-      classified.push.apply(classified, modelLines);
+      classified = [...classified, ...modelLines];
     if (enumLines.length > 2)
-      classified.push.apply(classified, enumLines);
+      classified = [...classified, ...enumLines];
     if (componentLines.length > 1) //
-      classified.push.apply(classified, componentLines);
+      classified = [...classified, ...componentLines];
 
     return classified;
   }
