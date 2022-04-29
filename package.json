@@ -1,0 +1,55 @@
+{
+  "name": "angular-vscode-cleaner",
+  "displayName": "Angular VSCode cleaner",
+  "description": "Extension that reorder and classify Angular imports",
+  "version": "0.0.1",
+  "publisher": "NicolasRoehm",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://https://github.com/NicolasRoehm/angular-vscode-cleaner.git"
+  },
+  "engines": {
+    "vscode": "^1.34.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.importCleaner",
+    "onCommand:extension.constructorCleaner",
+    "onCommand:extension.componentCleaner"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.importCleaner",
+        "title": "Clean imports"
+      },
+      {
+        "command": "extension.constructorCleaner",
+        "title": "Clean constructor"
+      },
+      {
+        "command": "extension.componentCleaner",
+        "title": "Clean component"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "lint": "eslint . --ext .ts,.tsx",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.0",
+    "@types/vscode": "^1.66.0",
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "eslint": "^8.13.0",
+    "typescript": "^4.6.3"
+  }
+}
