@@ -16,9 +16,9 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.importCleaner",
-    "onCommand:extension.constructorCleaner",
-    "onCommand:extension.componentCleaner"
+    "onCommand:angular-vscode-extension.importCleaner",
+    "onCommand:angular-vscode-extension.constructorCleaner",
+    "onCommand:angular-vscode-extension.componentCleaner"
   ],
   "main": "./out/extension",
   "contributes": {
@@ -26,8 +26,8 @@
       "type": "object",
       "title": "angular-vscode-cleaner",
       "properties": {
-        "extension.import.config": {
-          "description": "Clean import configuration",
+        "angular-vscode-extension.import.categories": {
+          "description": "Clean import categories",
           "scope": "window",
           "type": "array",
           "items": {
@@ -103,15 +103,15 @@
     },
     "commands": [
       {
-        "command": "extension.importCleaner",
+        "command": "angular-vscode-extension.importCleaner",
         "title": "Clean imports"
       },
       {
-        "command": "extension.constructorCleaner",
+        "command": "angular-vscode-extension.constructorCleaner",
         "title": "Clean constructor"
       },
       {
-        "command": "extension.componentCleaner",
+        "command": "angular-vscode-extension.componentCleaner",
         "title": "Clean component"
       }
     ]

@@ -1,5 +1,21 @@
+// External modules
+import { workspace }      from 'vscode';
+
+// Models
+import { ImportCategory } from '../models/import-category.model';
+
 export class ImportHelper
 {
+  public static getCategories() : ImportCategory[]
+  {
+    const extConfig  = workspace.getConfiguration('angular-vscode-extension')
+    const parameters : any[]          = extConfig.import.categories;
+    const categories : ImportCategory[] = [];
+    for (let parameter of parameters)
+      categories.push(new ImportCategory(parameter));
+    return categories;
+  }
+
   public static classifyLines(lines : string[]) : string[]
   {
     let classified : string[] = [];
