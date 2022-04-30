@@ -3,10 +3,11 @@
   "displayName": "classify-ts-import",
   "description": "Extension that reorders and classifies TypeScript imports",
   "preview": true,
-  "version": "0.0.1",
-  "publisher": "NicolasRoehm",
+  "version": "1.0.0",
+  "publisher": "StudioCenturio",
   "license": "MIT",
   "main": "dist/extension.js",
+  "icon": "images/logo.png",
   "scripts": {
     "vscode:prepublish": "npm run build",
     "compile": "cross-env NODE_ENV=development ts-node --files -P ./scripts/tsconfig.json ./scripts",
@@ -32,7 +33,7 @@
     "url": "git://https://github.com/NicolasRoehm/classify-ts-import.git"
   },
   "engines": {
-    "vscode": "^1.51.0",
+    "vscode": "^1.65.0",
     "node": ">=14.15.1"
   },
   "categories": [
@@ -85,6 +86,10 @@
             {
               "category": "AWS modules",
               "fromContent": "@aws"
+            },
+            {
+              "category": "External modules",
+              "fromContent": ""
             },
             {
               "category": "Internal modules",

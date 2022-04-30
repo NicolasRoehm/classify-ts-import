@@ -21,17 +21,28 @@ export class ImportHelper
     let classified : string[] = [];
 
     for (const line of lines)
+    {
+      let categorized : boolean = false;
       for (const category of categories)
         for (const selector of category.fromSelectors)
           if (line.includes(selector))
+          {
             category.lines.push(line);
+            categorized = true;
+          }
+      // NOTE Default category
+      if (!categorized)
+        categories.find(c => c.isExternal)?.lines.push(line);
+    }
 
+    // NOTE Add empty line or clear empty category
     for (const category of categories)
       if (category.lines.length > 1)
         category.lines.push('');
       else
         category.lines = [];
 
+    // NOTE Update classified lines
     for (const category of categories)
       classified = [...classified, ...category.lines];
 

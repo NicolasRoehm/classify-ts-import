@@ -4,6 +4,8 @@ export class ImportCategory
   public category      : string;
   public fromContent   : string;
 
+  public isExternal    : boolean;
+
   public fromSelectors : string[];
 
   public lines         : string[];
@@ -11,8 +13,10 @@ export class ImportCategory
   constructor(index : number, json : any)
   {
     this.id            = index;
-    this.category      = json?.category    || '';
-    this.fromContent   = json?.fromContent || '';
+    this.category      = json.category;
+    this.fromContent   = json.fromContent;
+
+    this.isExternal    = !this.fromContent;
 
     this.fromSelectors = [];
     this.lines         = [ `// ${this.category}` ];
