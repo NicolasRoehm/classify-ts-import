@@ -18,7 +18,7 @@ Reorganizes TypeScript imports based to your configuration.
 The default settings come with a classification for the following categories:
 
 **settings.json**
-```json
+```jsonc
 "classify-ts-import.import.categories": [
   // The order of the categories will be preserved
   {
