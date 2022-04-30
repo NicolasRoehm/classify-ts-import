@@ -6,9 +6,9 @@ import { ImportCategory } from '../models/import-category.model';
 
 export class ImportHelper
 {
-  public static getCategories() : ImportCategory[]
+  public static getCategoriesFromConfig() : ImportCategory[]
   {
-    const extConfig  = workspace.getConfiguration('angular-vscode-extension');
+    const extConfig  = workspace.getConfiguration('classify-ts-import');
     const parameters : any[]          = extConfig.import.categories;
     const categories : ImportCategory[] = [];
     for (let i = 0; i < parameters.length; i++)
@@ -69,7 +69,7 @@ export class ImportHelper
       if (!hasLBracket && !hasRBracket) // NOTE If it's an import * as
         continue;
 
-      const betweenBrackets = lines[i].substring(lines[i].lastIndexOf('{') + 1, lines[i].lastIndexOf('}'));
+      const betweenBrackets = lines[i].slice(lines[i].lastIndexOf('{') + 1, lines[i].lastIndexOf('}'));
 
       if (betweenBrackets.includes(',')) // NOTE If there are more than one package
       {
@@ -87,9 +87,9 @@ export class ImportHelper
 
     const packages  = betweenBrackets.split(',');
 
-    for (let x = 0; x < packages.length; x++)
+    for (const [x, pkg] of packages.entries())
     {
-      const packageName = packages[x].replace(/ +/g, ''); // NOTE Clean package name
+      const packageName = pkg.replace(/ +/g, ''); // NOTE Clean package name
       const newLine     = ImportHelper.createImportLine(packageName, fromValue);
       lines.splice(i + x + 1, 0, newLine); // NOTE Push a new line for each package
     }
@@ -135,15 +135,15 @@ export class ImportHelper
   public static getLongestModuleName(lines : string[]) : number
   {
     let longestLength : number = 0;
-    for (let i = 0; i < lines.length; i++)
+    for (const line of lines)
     {
-      const hasLBracket = lines[i].includes('{');
-      const hasRBracket = lines[i].includes('}');
+      const hasLBracket = line.includes('{');
+      const hasRBracket = line.includes('}');
 
       if (!hasLBracket && !hasRBracket)
         continue;
 
-      const betweenBrackets = lines[i].substring(lines[i].lastIndexOf('{') + 1, lines[i].lastIndexOf('}'));
+      const betweenBrackets = line.slice(line.lastIndexOf('{') + 1, line.lastIndexOf('}'));
       const packageName     = betweenBrackets.replace(/ +/g, ''); // NOTE Clean package name
 
       if (packageName.length > longestLength)

@@ -1,4 +1,4 @@
-# Angular VSCode Cleaner
+# Classify TypeScript Import - VSCode extension
 
 ## Usage
 
@@ -6,7 +6,7 @@
 
 Get the project locally using
 ```sh
-git clone https://github.com/NicolasRoehm/angular-vscode-cleaner.git
+git clone https://github.com/NicolasRoehm/classify-ts-import.git
 ```
 
 Download dependencies using

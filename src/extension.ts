@@ -8,19 +8,18 @@ import { Range }            from 'vscode';
 
 // Helpers
 import { ImportHelper }      from './helpers/import.helper';
-import { ConstructorHelper } from './helpers/constructor.helper';
 
 // This method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context : ExtensionContext) : void
 {
 
-  console.log('The extension "angular-vscode-cleaner" is now active!');
+  console.log('The extension "classify-ts-import" is now active!');
 
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
-  const disposableImportCleaner = commands.registerCommand('angular-vscode-extension.importCleaner', () =>
+  const disposableImportClassifier = commands.registerCommand('classify-ts-import.importClassifier', () =>
   {
     // The code you place here will be executed every time your command is executed
 
@@ -28,17 +27,17 @@ export function activate(context : ExtensionContext) : void
 
     if (!editor)
     {
-      window.showErrorMessage("No file is open, can't reorder imports");
+      window.showErrorMessage("No file is open, can't classify imports");
       return;
     }
 
-    const categories = ImportHelper.getCategories();
+    const categories = ImportHelper.getCategoriesFromConfig();
 
     const docText  = editor.document.getText();
     const allLines = docText.split('\n');
 
     let importFound : boolean = false;
-    // let firstIndex  : number  = 0;
+    let firstIndex  : number  = 0;
     let lastIndex   : number  = 0;
 
     for (const [index, line] of allLines.entries())
@@ -53,7 +52,7 @@ export function activate(context : ExtensionContext) : void
       {
         if (importFound === false)
         {
-          // firstIndex = index;
+          firstIndex  = index;
           importFound = true;
         }
         lastIndex = index;
@@ -62,12 +61,12 @@ export function activate(context : ExtensionContext) : void
 
     if (!importFound)
     {
-      window.showErrorMessage("No import found, can't reorder");
+      window.showErrorMessage("No import found, can't classify");
       return;
     }
 
     const lines : string[] = [];
-    for (let y = 0; y <= lastIndex; y++) // NOTE Can change 0 to firstIndex
+    for (let y = firstIndex; y <= lastIndex; y++)
       lines.push(allLines[y]);
 
     ImportHelper.cleanLines(lines);
@@ -94,7 +93,7 @@ export function activate(context : ExtensionContext) : void
     // NOTE Remove lines found from activeDocument
     editor.edit(editBuilder =>
     {
-      const start = new Position(0, 0); // NOTE Can change the first 0 to firstIndex
+      const start = new Position(firstIndex, 0);
       const end   = new Position(lastIndex, allLines[lastIndex].length);
       const rangeToDelete = new Range(start, end);
       editBuilder.delete(rangeToDelete);
@@ -105,84 +104,7 @@ export function activate(context : ExtensionContext) : void
 
   });
 
-  const disposableConstructorCleaner = commands.registerCommand('angular-vscode-extension.constructorCleaner', () =>
-  {
-    const editor = window.activeTextEditor;
-
-    if (!editor)
-    {
-      window.showErrorMessage("No file is open, can't clean constructor");
-      return;
-    }
-
-    const docText  = editor.document.getText();
-    const allLines = docText.split('\n');
-
-    let constructorFound : boolean = false;
-    let firstIndex       : number  = 0;
-    let lastIndex        : number  = 0;
-
-    let totalLBracket    : number  = 0;
-
-    for (let i = 0; i <= allLines.length; i++)
-    {
-      const line           = allLines[i];
-      const hasConstructor = line.includes('constructor');
-      const hasLBracket    = line.includes('{');
-      const hasRBracket    = line.includes('}');
-      if (hasConstructor)
-      {
-        constructorFound = true;
-        firstIndex = i;
-      }
-      if (constructorFound && hasLBracket)
-        totalLBracket++;
-      if (constructorFound && hasRBracket)
-        totalLBracket--;
-      if (constructorFound && hasRBracket && totalLBracket === 0)
-      { // NOTE Get the position of the last } after the first { position
-        lastIndex = i;
-        break;
-      }
-    }
-
-    if (!constructorFound)
-    {
-      window.showErrorMessage("No constructor found, can't clean");
-      return;
-    }
-
-    const lines : string[] = [];
-    for (let x = firstIndex; x <= lastIndex + 1; x++)
-      lines.push(allLines[x]);
-
-    const joinedLines        : string = lines.join('\n');
-
-    const betweenParenthesis : string = joinedLines.slice(joinedLines.indexOf('(') + 1, joinedLines.indexOf(')'));
-    const betweenBrackets    : string = joinedLines.slice(joinedLines.indexOf('{') + 1, joinedLines.lastIndexOf('}'));
-
-    const newConstructor = ConstructorHelper.createConstructorParameters(betweenParenthesis, betweenBrackets);
-
-    // NOTE Remove lines found from activeDocument
-    editor.edit(editBuilder =>
-    {
-      const start = new Position(firstIndex, 0);
-      const end   = new Position(lastIndex, allLines[lastIndex].length);
-      const rangeToDelete = new Range(start, end);
-      editBuilder.delete(rangeToDelete);
-
-      // NOTE Add new lines to activeDocument
-      editBuilder.insert(start, newConstructor);
-    });
-
-  });
-
-  const disposableComponentCleaner = commands.registerCommand('angular-vscode-extension.componentCleaner', () =>
-  {
-    // TODO
-  });
-
-  context.subscriptions.push(disposableImportCleaner, disposableConstructorCleaner, disposableComponentCleaner);
+  context.subscriptions.push(disposableImportClassifier);
 }
 
 // -------------------------------------------------------------------------------

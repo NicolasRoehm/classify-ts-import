@@ -1,7 +1,7 @@
 {
-  "name": "angular-vscode-cleaner",
-  "displayName": "Angular VSCode Cleaner",
-  "description": "Extension that reorder and classify Angular imports",
+  "name": "classify-ts-import",
+  "displayName": "classify-ts-import",
+  "description": "Extension that reorders and classifies TypeScript imports",
   "preview": true,
   "version": "0.0.1",
   "publisher": "NicolasRoehm",
@@ -23,13 +23,13 @@
     "name": "NicolasRoehm",
     "url": "https://github.com/NicolasRoehm"
   },
-  "homepage": "https://github.com/NicolasRoehm/angular-vscode-cleaner/blob/master/README.md",
+  "homepage": "https://github.com/NicolasRoehm/classify-ts-import/blob/master/README.md",
   "bugs": {
-    "url": "https://github.com/NicolasRoehm/angular-vscode-cleaner/issues"
+    "url": "https://github.com/NicolasRoehm/classify-ts-import/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git://https://github.com/NicolasRoehm/angular-vscode-cleaner.git"
+    "url": "git://https://github.com/NicolasRoehm/classify-ts-import.git"
   },
   "engines": {
     "vscode": "^1.51.0",
@@ -39,23 +39,24 @@
     "Other"
   ],
   "keywords": [
-    "vscode",
+    "classify-ts-import",
+    "classify-typescript-import",
+    "vscode-extension-import-classifier",
+    "reorder-import",
+    "clean-import",
     "vscode-extension",
-    "vscode-extension-import-cleaner",
-    "import-cleaner"
+    "vscode"
   ],
   "activationEvents": [
-    "onCommand:angular-vscode-extension.importCleaner",
-    "onCommand:angular-vscode-extension.constructorCleaner",
-    "onCommand:angular-vscode-extension.componentCleaner"
+    "onCommand:classify-ts-import.importClassifier"
   ],
   "contributes": {
     "configuration": {
       "type": "object",
-      "title": "angular-vscode-cleaner",
+      "title": "classify-ts-import",
       "properties": {
-        "angular-vscode-extension.import.categories": {
-          "description": "Clean import categories",
+        "classify-ts-import.import.categories": {
+          "description": "Import categories",
           "scope": "window",
           "type": "array",
           "items": {
@@ -135,16 +136,8 @@
     },
     "commands": [
       {
-        "command": "angular-vscode-extension.importCleaner",
-        "title": "Clean imports"
-      },
-      {
-        "command": "angular-vscode-extension.constructorCleaner",
-        "title": "Clean constructor"
-      },
-      {
-        "command": "angular-vscode-extension.componentCleaner",
-        "title": "Clean component"
+        "command": "classify-ts-import.importClassifier",
+        "title": "Classify imports"
       }
     ]
   },
