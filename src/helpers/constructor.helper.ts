@@ -27,7 +27,7 @@ export class ConstructorHelper
 
         // NOTE Get type
         const index = part.indexOf(':');
-        const type1 = part.substr(index); // NOTE Get everything after the found index
+        const type1 = part.slice(index); // NOTE Get everything after the found index
 
         const type2 = type1.replace(/,/g,  ''); // NOTE Remove comma
         const type3 = type2.replace(/:/g,  ''); // NOTE Remove colon
@@ -54,8 +54,7 @@ export class ConstructorHelper
       ConstructorHelper.rewriteConstructorVar(publics,  '    public  ', maxNameLength);
       ConstructorHelper.rewriteConstructorVar(privates, '    private ', maxNameLength);
 
-      const emptyArr : string[] = [];
-      const arrays = emptyArr.concat(others, publics, privates);
+      const arrays = [ ...others, ...publics, ...privates ];
       const lines  = arrays.join(',\n');
 
       text += lines;

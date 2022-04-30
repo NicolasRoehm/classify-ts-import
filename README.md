@@ -42,3 +42,7 @@ import { AddProfileComponent }    from '../add-profile/add-profile.component';
 import { RemoveProfileComponent } from '../remove-profile/remove-profile.component';
 import { User } from '../../shared/models/user.model';
 ```
+
+## Credits
+
+[tjx666/vscode-extension-boilerplate](https://github.com/tjx666/vscode-extension-boilerplate)

@@ -10,18 +10,13 @@ export class ImportCategory
 
   constructor(index : number, json : any)
   {
-    this.lines         = [];
     this.id            = index;
     this.category      = json?.category    || '';
     this.fromContent   = json?.fromContent || '';
 
     this.fromSelectors = [];
+    this.lines         = [ `// ${this.category}` ];
     if (this.fromContent)
-    {
-      if (this.fromContent.includes(','))
-        this.fromSelectors = this.fromContent.split(',').map(s => s.trim());
-      else
-        this.fromSelectors = [ this.fromContent.trim() ];
-    }
+      this.fromSelectors = this.fromContent.includes(',') ? this.fromContent.split(',').map(s => s.trim()) : [ this.fromContent.trim() ];
   }
 }

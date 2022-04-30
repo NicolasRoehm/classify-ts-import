@@ -20,8 +20,6 @@ export class ImportHelper
   {
     let classified : string[] = [];
 
-    // TODO Add pages
-    // TODO Add AWS modules
     for (const line of lines)
       for (const category of categories)
         for (const selector of category.fromSelectors)
@@ -29,10 +27,13 @@ export class ImportHelper
             category.lines.push(line);
 
     for (const category of categories)
-    {
-      category.lines.push('');
+      if (category.lines.length > 1)
+        category.lines.push('');
+      else
+        category.lines = [];
+
+    for (const category of categories)
       classified = [...classified, ...category.lines];
-    }
 
     return classified;
   }

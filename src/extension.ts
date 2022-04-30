@@ -1,5 +1,4 @@
 'use strict';
-
 // External modules
 import { window }           from 'vscode';
 import { commands }         from 'vscode';
@@ -42,9 +41,8 @@ export function activate(context : ExtensionContext) : void
     // let firstIndex  : number  = 0;
     let lastIndex   : number  = 0;
 
-    for (let i = 0; i < allLines.length; i++)
+    for (const [index, line] of allLines.entries())
     {
-      const line        = allLines[i];
       const hasImport   = line.includes('import');
       const hasFrom     = line.includes('from');
       const hasLBracket = line.includes('{');
@@ -55,10 +53,10 @@ export function activate(context : ExtensionContext) : void
       {
         if (importFound === false)
         {
-          // firstIndex = i;
+          // firstIndex = index;
           importFound = true;
         }
-        lastIndex = i;
+        lastIndex = index;
       }
     }
 
@@ -90,9 +88,8 @@ export function activate(context : ExtensionContext) : void
       return 0; // NOTE Values must be equal
     });
 
-    let classifiedLines : string[] = [];
-    classifiedLines = ImportHelper.classifyLines(lines, categories);
-    const linesAsText = classifiedLines.join('\n');
+    const classifiedLines = ImportHelper.classifyLines(lines, categories);
+    const linesAsText     = classifiedLines.join('\n');
 
     // NOTE Remove lines found from activeDocument
     editor.edit(editBuilder =>
@@ -161,8 +158,8 @@ export function activate(context : ExtensionContext) : void
 
     const joinedLines        : string = lines.join('\n');
 
-    const betweenParenthesis : string = joinedLines.substring(joinedLines.indexOf('(') + 1, joinedLines.indexOf(')'));
-    const betweenBrackets    : string = joinedLines.substring(joinedLines.indexOf('{') + 1, joinedLines.lastIndexOf('}'));
+    const betweenParenthesis : string = joinedLines.slice(joinedLines.indexOf('(') + 1, joinedLines.indexOf(')'));
+    const betweenBrackets    : string = joinedLines.slice(joinedLines.indexOf('{') + 1, joinedLines.lastIndexOf('}'));
 
     const newConstructor = ConstructorHelper.createConstructorParameters(betweenParenthesis, betweenBrackets);
 
@@ -180,14 +177,12 @@ export function activate(context : ExtensionContext) : void
 
   });
 
-  let disposableComponentCleaner = commands.registerCommand('angular-vscode-extension.componentCleaner', () =>
+  const disposableComponentCleaner = commands.registerCommand('angular-vscode-extension.componentCleaner', () =>
   {
     // TODO
   });
 
-  context.subscriptions.push(disposableImportCleaner);
-  context.subscriptions.push(disposableConstructorCleaner);
-  context.subscriptions.push(disposableComponentCleaner);
+  context.subscriptions.push(disposableImportCleaner, disposableConstructorCleaner, disposableComponentCleaner);
 }
 
 // -------------------------------------------------------------------------------
@@ -195,4 +190,4 @@ export function activate(context : ExtensionContext) : void
 // -------------------------------------------------------------------------------
 
 // NOTE This method is called when your extension is deactivated
-export function deactivate() { }
+export function deactivate() { /* */ }

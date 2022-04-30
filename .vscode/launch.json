@@ -6,23 +6,35 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Extension",
+      "name": "Run Extension",
       "type": "extensionHost",
       "request": "launch",
-      "runtimeExecutable": "${execPath}",
       "args": ["--extensionDevelopmentPath=${workspaceFolder}"],
-      "outFiles": ["${workspaceFolder}/out/**/*.js"]
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**",
+        "**/Resources/app/out/vs/**"
+      ],
+      "sourceMaps": true
     },
     {
       "name": "Extension Tests",
       "type": "extensionHost",
       "request": "launch",
-      "runtimeExecutable": "${execPath}",
       "args": [
         "--extensionDevelopmentPath=${workspaceFolder}",
-        "--extensionTestsPath=${workspaceFolder}/out/test"
+        "--extensionTestsPath=${workspaceFolder}/dist/test",
+        "${workspaceFolder}/test-workspace"
       ],
-      "outFiles": ["${workspaceFolder}/out/test/**/*.js"]
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**",
+        "**/Resources/app/out/vs/**"
+      ],
+      "sourceMaps": true,
+      "preLaunchTask": "tasks: watch-tests"
     }
   ]
 }
