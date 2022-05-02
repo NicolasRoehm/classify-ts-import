@@ -122,6 +122,10 @@ import { SimpleChanges }          from '@angular/core';
 import { MatPaginator }           from '@angular/material';
 import { MatTableDataSource }     from '@angular/material';
 
+// External modules
+import { NgbModal }               from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService }       from '@ngx-translate/core';
+
 // Internal modules
 import { environment }            from '@env/environment';
 
