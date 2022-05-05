@@ -3,7 +3,7 @@
   "displayName": "classify-ts-import",
   "description": "Extension that reorders and classifies TypeScript imports",
   "preview": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "StudioCenturio",
   "license": "MIT",
   "main": "dist/extension.js",
@@ -57,6 +57,12 @@
       "type": "object",
       "title": "classify-ts-import",
       "properties": {
+        "classify-ts-import.import.groupByOrigin": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to group the modules by origin",
+          "scope": "window"
+        },
         "classify-ts-import.import.categories": {
           "description": "Import categories",
           "scope": "window",

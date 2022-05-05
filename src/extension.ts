@@ -54,6 +54,10 @@ export function activate(context : ExtensionContext) : void
         {
           firstIndex  = index;
           importFound = true;
+          // NOTE Clear comment before first import
+          const prevLine = allLines[index - 1];
+          if (prevLine && prevLine.startsWith('//'))
+            firstIndex--;
         }
         lastIndex = index;
       }
@@ -75,14 +79,14 @@ export function activate(context : ExtensionContext) : void
 
     ImportHelper.indentLines(lines, maxNameLength);
 
-    // NOTE Order lines by fromValue
+    // NOTE Order lines by origin
     lines.sort((a, b) =>
     {
-      const fromA = ImportHelper.getFromValue(a);
-      const fromB = ImportHelper.getFromValue(b);
-      if (fromA < fromB)
+      const originA = ImportHelper.getOrigin(a);
+      const originB = ImportHelper.getOrigin(b);
+      if (originA < originB)
         return -1;
-      if (fromA > fromB)
+      if (originA > originB)
         return 1;
       return 0; // NOTE Values must be equal
     });

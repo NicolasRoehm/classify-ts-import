@@ -6,6 +6,11 @@ import { ImportCategory } from '../models/import-category.model';
 
 export class ImportHelper
 {
+  public static cleanPackageName(packageName : string) : string
+  {
+    return packageName.replace(/ +/g, ' ').trim();
+  }
+
   public static getCategoriesFromConfig() : ImportCategory[]
   {
     const extConfig  = workspace.getConfiguration('classify-ts-import');
@@ -35,12 +40,15 @@ export class ImportHelper
         categories.find(c => c.isExternal)?.lines.push(line);
     }
 
-    // NOTE Add empty line or clear empty category
-    for (const category of categories)
-      if (category.lines.length > 1)
-        category.lines.push('');
-      else
+    // NOTE Add empty line (for Line Feed) or clear empty category
+    const lastIndex = categories.length - 1;
+    for (const [i, category] of categories.entries())
+    {
+      if (category.lines.length === 1)
         category.lines = [];
+      if (category.lines.length > 1 && lastIndex !== i)
+        category.lines.push('');
+    }
 
     // NOTE Update classified lines
     for (const category of categories)
@@ -51,6 +59,10 @@ export class ImportHelper
 
   public static cleanLines(lines : string[]) : void
   {
+    // NOTE Get config
+    const extConfig = workspace.getConfiguration('classify-ts-import');
+    const groupByOrigin : boolean = extConfig.import.groupByOrigin;
+
     for (let i = 0; i < lines.length; i++)
     {
       // NOTE Remove comments
@@ -77,12 +89,12 @@ export class ImportHelper
       const hasLBracket = lines[i].includes('{');
       const hasRBracket = lines[i].includes('}');
 
-      if (!hasLBracket && !hasRBracket) // NOTE If it's an import * as
+      if (!hasLBracket && !hasRBracket) // NOTE If it's an import * as or default exported module
         continue;
 
       const betweenBrackets = lines[i].slice(lines[i].lastIndexOf('{') + 1, lines[i].lastIndexOf('}'));
 
-      if (betweenBrackets.includes(',')) // NOTE If there are more than one package
+      if (!groupByOrigin && betweenBrackets.includes(',')) // NOTE If there are more than one package
       {
         ImportHelper.splitPackages(betweenBrackets, i, lines); // NOTE Split packages
         continue;
@@ -94,14 +106,14 @@ export class ImportHelper
 
   public static splitPackages(betweenBrackets : string, i : number, lines : string[]) : void
   {
-    const fromValue = ImportHelper.getFromValue(lines[i]);
+    const origin   = ImportHelper.getOrigin(lines[i]);
 
-    const packages  = betweenBrackets.split(',');
+    const packages = betweenBrackets.split(',');
 
     for (const [x, pkg] of packages.entries())
     {
-      const packageName = pkg.replace(/ +/g, ''); // NOTE Clean package name
-      const newLine     = ImportHelper.createImportLine(packageName, fromValue);
+      const packageName = ImportHelper.cleanPackageName(pkg);
+      const newLine     = ImportHelper.createImportLine(lines[i], packageName, origin);
       lines.splice(i + x + 1, 0, newLine); // NOTE Push a new line for each package
     }
 
@@ -122,24 +134,25 @@ export class ImportHelper
 
   public static rewriteImport(betweenBrackets : string, line : string) : string
   {
-    const fromValue   = ImportHelper.getFromValue(line);
-    const packageName = betweenBrackets.replace(/ +/g, ''); // NOTE Clean package name
-    const newLine     = ImportHelper.createImportLine(packageName, fromValue);
+    const origin      = ImportHelper.getOrigin(line);
+    const packageName = ImportHelper.cleanPackageName(betweenBrackets);
+    const newLine     = ImportHelper.createImportLine(line, packageName, origin);
     return newLine;
   }
 
-  public static getFromValue(line : string) : string
+  public static getOrigin(line : string) : string
   {
     const betweenApostrophes = line.match("'(.*)'");
-    let fromValue : string = '';
+    let origin : string = '';
     if (betweenApostrophes)
-      fromValue = betweenApostrophes[1];
-    return fromValue;
+      origin = betweenApostrophes[1];
+    return origin;
   }
 
-  public static createImportLine(moduleName : string, fromValue : string) : string
+  public static createImportLine(line : string, moduleName : string, origin : string) : string
   {
-    const importLine = 'import { ' + moduleName.trim() + " } from '" + fromValue + "';";
+    const start      = line.includes('import type') ? 'import type' : 'import';
+    const importLine = `${start} { ${moduleName.trim()} } from '${origin}';`;
     return importLine;
   }
 
@@ -155,7 +168,7 @@ export class ImportHelper
         continue;
 
       const betweenBrackets = line.slice(line.lastIndexOf('{') + 1, line.lastIndexOf('}'));
-      const packageName     = betweenBrackets.replace(/ +/g, ''); // NOTE Clean package name
+      const packageName     = ImportHelper.cleanPackageName(betweenBrackets);
 
       if (packageName.length > longestLength)
         longestLength = packageName.length;

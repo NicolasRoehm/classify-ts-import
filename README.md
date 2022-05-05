@@ -19,6 +19,7 @@ The default settings come with a classification for the following categories:
 
 **settings.json**
 ```jsonc
+"classify-ts-import.import.groupByOrigin": false,
 "classify-ts-import.import.categories": [
   // The order of the categories will be preserved
   {
@@ -98,6 +99,7 @@ Start tsc watch using `npm run watch` then press `F5`.
 ```ts
 import { Component, EventEmitter, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
+import type { Ref, ComputedRef } from 'vue';
 import { environment }            from '@env/environment';
 import { AuthService } from '@services/auth.service';
 import { ProfileService } from '@services/profile.service';
@@ -109,6 +111,7 @@ import { User } from '@models/user.model';
 import { Endpoint }  from '@enums/endpoint.enum';
 import { NgbModal }               from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService }       from '@ngx-translate/core';
+import { find as _find } from 'lodash';
 ```
 
 **Result**
@@ -121,6 +124,13 @@ import { Output }                 from '@angular/core';
 import { SimpleChanges }          from '@angular/core';
 import { MatPaginator }           from '@angular/material';
 import { MatTableDataSource }     from '@angular/material';
+
+// External modules
+import { NgbModal }               from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService }       from '@ngx-translate/core';
+import { find as _find }          from 'lodash';
+import type { Ref }               from 'vue';
+import type { ComputedRef }       from 'vue';
 
 // Internal modules
 import { environment }            from '@env/environment';
@@ -144,6 +154,11 @@ import { AddProfileComponent }    from '@components/add-profile.component';
 import { RemoveProfileComponent } from '@components/remove-profile.component';
 ```
 
+# TODO
+- Test : 
+  - `import defaultModule, { otherModule } from '@origin/file';`
+  - `import * as lib from 'library';`
+- Merge imports by origin if `groupByOrigin`
 
 # Changelog
 The changelog can be found [here](CHANGELOG.md)
