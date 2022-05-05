@@ -11,7 +11,7 @@
 
 \> **Classify imports**
 
-Reorganizes TypeScript imports based to your configuration.
+Reorganizes TypeScript imports based on your configuration.
 
 # Configuration
 
