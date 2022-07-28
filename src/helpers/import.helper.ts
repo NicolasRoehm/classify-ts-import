@@ -15,9 +15,10 @@ export class ImportHelper
   {
     const extConfig  = workspace.getConfiguration('classify-ts-import');
     const parameters : any[]          = extConfig.import.categories;
+    const addTitles : boolean = extConfig.import.addTitles; 
     const categories : ImportCategory[] = [];
     for (let i = 0; i < parameters.length; i++)
-      categories.push(new ImportCategory(i, parameters[i]));
+      categories.push(new ImportCategory(i, parameters[i], addTitles));
     return categories;
   }
 
