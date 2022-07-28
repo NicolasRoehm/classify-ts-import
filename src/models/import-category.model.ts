@@ -20,6 +20,7 @@ export class ImportCategory
 
     this.fromSelectors = [];
     this.lines         = addTitles ? [ `// ${this.category}` ] : [];
+
     if (this.fromContent)
       this.fromSelectors = this.fromContent.includes(',') ? this.fromContent.split(',').map(s => s.trim()) : [ this.fromContent.trim() ];
   }
