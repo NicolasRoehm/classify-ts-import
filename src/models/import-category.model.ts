@@ -19,7 +19,8 @@ export class ImportCategory
     this.isExternal    = !this.fromContent;
 
     this.fromSelectors = [];
-    this.lines         = addTitles ? [`// ${this.category}`] : [];
+    this.lines         = addTitles ? [ `// ${this.category}` ] : [];
+
     if (this.fromContent)
       this.fromSelectors = this.fromContent.includes(',') ? this.fromContent.split(',').map(s => s.trim()) : [ this.fromContent.trim() ];
   }
