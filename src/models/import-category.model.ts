@@ -10,7 +10,7 @@ export class ImportCategory
 
   public lines         : string[];
 
-  constructor(index : number, json : any)
+  constructor(index : number, json : any, addTitles: boolean)
   {
     this.id            = index;
     this.category      = json.category;
@@ -19,7 +19,7 @@ export class ImportCategory
     this.isExternal    = !this.fromContent;
 
     this.fromSelectors = [];
-    this.lines         = [ `// ${this.category}` ];
+    this.lines         = addTitles ? [ `// ${this.category}` ] : [];
     if (this.fromContent)
       this.fromSelectors = this.fromContent.includes(',') ? this.fromContent.split(',').map(s => s.trim()) : [ this.fromContent.trim() ];
   }
