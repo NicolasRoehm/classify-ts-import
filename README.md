@@ -20,6 +20,7 @@ The default settings come with a classification for the following categories:
 **settings.json**
 ```jsonc
 "classify-ts-import.import.groupByOrigin": false,
+"classify-ts-import.import.addTitles": true,
 "classify-ts-import.import.categories": [
   // The order of the categories will be preserved
   {

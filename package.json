@@ -3,7 +3,7 @@
   "displayName": "classify-ts-import",
   "description": "Extension that reorders and classifies TypeScript imports",
   "preview": true,
-  "version": "1.0.1",
+  "version": "1.1.0",
   "publisher": "StudioCenturio",
   "license": "MIT",
   "main": "dist/extension.js",
