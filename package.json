@@ -63,6 +63,12 @@
           "description": "Whether to group the modules by origin",
           "scope": "window"
         },
+        "classify-ts-import.import.addTitles": {
+          "type": "boolean",
+          "default": true,
+          "description": "Display the category title in a comment line or not",
+          "scope": "window"
+        },
         "classify-ts-import.import.categories": {
           "description": "Import categories",
           "scope": "window",
